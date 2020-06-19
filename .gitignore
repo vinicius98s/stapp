@@ -1,0 +1,9 @@
+node_modules
+
+# Environemnt variables
+.env
+.env.*
+
+# Yarn files
+yarn-debug.log*
+yarn-error.log*

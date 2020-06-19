@@ -1,0 +1,14 @@
+{
+  "name": "stapp",
+  "author": "Vinicius Sales <vinicius.2010.s@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "dev:server": "yarn workspace @stapp/server dev"
+  }
+}
