@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider, CSSReset } from '@chakra-ui/core';
+import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
 
 import App from './App';
-import theme from './styles/theme';
+import theme, { config, Theme } from './styles/theme';
+
+import CustomScrollbar from './components/CustomScrollbar';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <CSSReset />
-      <App />
+      <ColorModeProvider>
+        <CSSReset config={(theme) => config(theme as Theme)} />
+        <CustomScrollbar />
+        <App />
+      </ColorModeProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

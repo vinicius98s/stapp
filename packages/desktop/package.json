@@ -27,9 +27,11 @@
     "emotion-theming": "^10.0.27",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {
+    "start": "concurrently \"yarn start:client\" \"yarn start:electron\"",
     "start:client": "export BROWSER=none && react-scripts start",
     "start:electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "yarn build:client && yarn build:electron",
@@ -59,6 +61,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.5",
+    "concurrently": "^5.2.0",
     "electron": "^9.0.4",
     "electron-builder": "^22.7.0",
     "typescript": "~3.7.2"
