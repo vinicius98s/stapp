@@ -2,7 +2,7 @@
   "name": "@stapp/desktop",
   "version": "0.0.1",
   "private": true,
-  "productName": "Electron Create React App Example",
+  "productName": "Stapp",
   "main": "electron/main.ts",
   "homepage": "./",
   "license": "MIT",
