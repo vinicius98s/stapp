@@ -10,11 +10,14 @@
     "apollo-datasource-mongodb": "^0.2.6",
     "apollo-server": "^2.15.0",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "graphql": "^15.1.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.19"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.5.0",
     "ts-node-dev": "^1.0.0-pre.49",
     "typescript": "^3.9.5"
   }

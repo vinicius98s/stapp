@@ -7,6 +7,7 @@ dist
 # Environemnt variables
 .env
 .env.*
+!.env.example
 
 # Yarn files
 yarn-debug.log*

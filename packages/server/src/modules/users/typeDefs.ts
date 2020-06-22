@@ -29,12 +29,4 @@ export default gql`
     password: String!
     confirmPassword: String!
   }
-
-  type Query {
-    user(id: ID!): User!
-  }
-
-  type Mutation {
-    createUser(input: CreateUser!): User!
-  }
 `;

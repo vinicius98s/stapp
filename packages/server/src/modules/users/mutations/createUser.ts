@@ -17,12 +17,12 @@ const createUser: IFieldResolver<any, Context, { input: CreateUser }> = async (
     throw new UserInputError('Confirm password does not match password');
   }
 
-  const existantUser = await users.getUserByEmail(email);
+  const existantUser = await users.getByEmail(email);
   if (existantUser) {
     throw new ForbiddenError('Account already exists');
   }
 
-  return users.createUser(input);
+  return users.create(input);
 };
 
 export default createUser;

@@ -5,15 +5,15 @@ import { CreateUser } from './typeDefs';
 import { UserSchema } from './model';
 
 export default class Users extends MongoDataSource<UserSchema> {
-  getUserByEmail(email: string) {
+  getByEmail(email: string) {
     return this.model.findOne({ email });
   }
 
-  getUserById(userId: string) {
+  getById(userId: string) {
     return this.findOneById(Types.ObjectId(userId));
   }
 
-  async createUser(user: CreateUser) {
+  async create(user: CreateUser) {
     const { _id, name, email, password } = await this.model.create(user);
     return {
       name,

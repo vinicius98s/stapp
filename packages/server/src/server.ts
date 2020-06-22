@@ -1,16 +1,20 @@
+import 'dotenv/config';
 import { ApolloServer } from 'apollo-server';
 import mongoose from 'mongoose';
 
 import { typeDefs } from './graphserver/typeDefs';
 import { resolvers } from './graphserver/resolvers';
 import DataSources from './graphserver/data-sources';
+import Context from './graphserver/context';
 
 const dataSources = new DataSources();
+const { context } = new Context(dataSources.users);
 
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources: () => ({ ...dataSources }),
+  context,
 });
 
 class Server {
