@@ -4,7 +4,7 @@ import Authentication from '../modules/authentication/typeDefs';
 
 const Server = gql`
   type Query {
-    user(id: ID!): User!
+    user(id: ID!): User
   }
 
   type Mutation {

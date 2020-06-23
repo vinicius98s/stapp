@@ -14,15 +14,16 @@ const Form: React.FC<FormProps> & { Input: typeof FormInput } = ({
 }) => {
   return (
     <Box as="form" {...props}>
-      {errors?.length &&
-        errors.map((error, i) => (
-          <Stack spacing={3} key={i}>
-            <Alert status="error">
-              <AlertIcon />
-              {error}
-            </Alert>
-          </Stack>
-        ))}
+      {errors && errors?.length > 0
+        ? errors?.map((error, i) => (
+            <Stack spacing={3} mb={4} key={i}>
+              <Alert status="error">
+                <AlertIcon />
+                {error}
+              </Alert>
+            </Stack>
+          ))
+        : null}
       {children}
     </Box>
   );

@@ -15,6 +15,7 @@ const apolloServer = new ApolloServer({
   resolvers,
   dataSources: () => ({ ...dataSources }),
   context,
+  cors: true,
 });
 
 class Server {

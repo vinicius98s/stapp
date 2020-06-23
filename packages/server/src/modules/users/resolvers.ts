@@ -1,4 +1,4 @@
-import { IFieldResolver } from 'apollo-server';
+import { IFieldResolver, UserInputError } from 'apollo-server';
 
 import DataSources from '../../graphserver/data-sources';
 
@@ -11,7 +11,11 @@ const user: IFieldResolver<any, Context, { id: string }> = async (
   { id },
   { dataSources: { users } }
 ) => {
-  return users.getUserById(id);
+  const user = users.getById(id);
+  if (!user) {
+    throw new UserInputError('User not found');
+  }
+  return user;
 };
 
 export const resolvers = {
