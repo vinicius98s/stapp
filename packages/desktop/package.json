@@ -1,6 +1,11 @@
 {
-  "name": "@stapp/desktop2",
+  "name": "@stapp/desktop",
   "version": "0.0.1",
+  "description": "Desktop version for Stapp",
+  "author": {
+    "name": "Vinicius Sales",
+    "email": "vinicius.2010.s@gmail.com"
+  },
   "private": true,
   "productName": "Stapp",
   "main": "electron/main.ts",
@@ -23,6 +28,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "apollo-boost": "^0.4.9",
+    "electron-serve": "^1.0.0",
     "emotion-theming": "^10.0.27",
     "graphql": "^15.1.0",
     "react": "^16.13.1",
@@ -35,7 +41,7 @@
     "start:client": "webpack-dev-server --mode development",
     "start:electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build:electron": "tsc electron/*.ts --outDir build/electron",
-    "package": "electron-builder build --mac --win -c.electronVersion=9.0.4 -c.extraMetadata.main=build/electron/main.js --publish never"
+    "build": "yarn build:client && yarn build:electron && electron-builder build --mac -c.electronVersion=9.0.4 -c.extraMetadata.main=build/electron/main.js --publish never"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
@@ -48,10 +54,11 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "babel-loader": "^8.1.0",
-    "eslint": "^7.3.0",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.20.0",
+    "concurrently": "^5.2.0",
+    "electron": "^9.0.5",
+    "electron-builder": "^22.7.0",
+    "html-webpack-plugin": "^4.3.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",

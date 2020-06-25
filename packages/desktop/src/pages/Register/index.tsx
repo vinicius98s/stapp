@@ -1,11 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Box, Divider } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 
-import Button from '../../components/Button';
-import Form from '../../components/Form';
+import { REGISTER } from '@common/apollo/mutations/authentication';
+
+import Button from '@components/Button';
+import Form from '@components/Form';
+import { useMutation } from '@apollo/react-hooks';
 
 const Login: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [register, { data, called, error, loading }] = useMutation(REGISTER);
+
+  useEffect(() => {
+    if (called && !error) {
+      console.log(data);
+      alert('register with success');
+    }
+  }, [data]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    await register({
+      variables: {
+        input: { name, email, password, confirmPassword },
+      },
+    });
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    switch (name) {
+      case 'name':
+        setName(value);
+        return;
+      case 'email':
+        setEmail(value);
+        return;
+      case 'password':
+        setPassword(value);
+        return;
+      case 'confirmPassword':
+        setConfirmPassword(value);
+        return;
+    }
+  };
+
   return (
     <Flex
       h="100vh"
@@ -15,28 +60,56 @@ const Login: React.FC = () => {
       justify="center"
       direction="column"
     >
-      <Form minW={325}>
-        <Form.Input id="name" label="Name" placeholder="Your name" />
+      <Form
+        minW={325}
+        errors={error ? [error.graphQLErrors[0].message] : []}
+        onSubmit={handleSubmit}
+      >
+        <Form.Input
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          label="Name"
+          placeholder="Your name"
+        />
         <Box h={8} />
         <Form.Input
           id="email"
+          name="email"
           label="Email address"
           type="email"
           placeholder="email@example.com"
+          value={email}
+          disabled={loading}
+          onChange={handleChange}
           inputHelperText={{
             id: 'email-helper-text',
             text: "We'll never share your email",
           }}
         />
         <Box h={8} />
-        <Form.Input id="password" label="Password" placeholder="••••••••" />
+        <Form.Input
+          onChange={handleChange}
+          name="password"
+          type="password"
+          value={password}
+          id="password"
+          label="Password"
+          placeholder="••••••••"
+        />
         <Box h={8} />
         <Form.Input
+          onChange={handleChange}
+          value={confirmPassword}
+          name="confirmPassword"
+          type="password"
           id="confirm-password"
           label="Confirm password"
           placeholder="••••••••"
+          disabled={loading}
         />
-        <Button mt={8} type="submit" children="Register" />
+        <Button mt={8} isLoading={loading} type="submit" children="Register" />
       </Form>
       <Divider my={8} w="100%" maxW={325} />
       <Box
@@ -47,7 +120,7 @@ const Login: React.FC = () => {
         rounded="lg"
         textAlign="center"
       >
-        <Link to="/">Already have an account</Link>
+        <Link to="/">Already have an account?</Link>
       </Box>
     </Flex>
   );

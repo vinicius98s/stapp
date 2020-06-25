@@ -9,7 +9,13 @@
     "noImplicitReturns": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["packages/desktop/src/components/*"],
+      "@common/*": ["packages/common/*"]
+    }
   },
   "exclude": ["node_modules"]
 }

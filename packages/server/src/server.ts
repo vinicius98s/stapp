@@ -16,6 +16,18 @@ const apolloServer = new ApolloServer({
   dataSources: () => ({ ...dataSources }),
   context,
   cors: true,
+  engine: {
+    reportSchema: process.env.NODE_ENV === 'production',
+    generateClientInfo: ({ request }) => {
+      const headers = request.http?.headers;
+      return {
+        clientName:
+          headers?.get('apollographql-client-name') || 'Unknown Client',
+        clientVersion:
+          headers?.get('apollographql-client-version') || 'Unversioned',
+      };
+    },
+  },
 });
 
 class Server {
@@ -32,7 +44,9 @@ class Server {
         useNewUrlParser: true,
       });
 
-      const { url } = await this.server.listen();
+      const { url } = await this.server.listen({
+        port: process.env.PORT || 4000,
+      });
 
       console.log('Connected to database');
       console.log(`🚀 Server ready at ${url}`);

@@ -24,7 +24,6 @@ const CustomScrollbar = () => {
           background: ${colorMode === 'light'
             ? colors.gray[700]
             : colors.gray[400]};
-          border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {

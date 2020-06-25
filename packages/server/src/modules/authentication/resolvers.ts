@@ -11,16 +11,20 @@ export interface Payload {
   _id: string;
 }
 
+enum Error {
+  INVALID_USER = 'Incorrect email or password.',
+}
+
 export const login: IFieldResolver<any, Context, { input: Login }> = async (
   _parent,
   { input: { email, password } },
   { dataSources: { users } }
 ) => {
   const user = await users.getByEmail(email);
-  if (!user) throw new ApolloError('User not found');
+  if (!user) throw new ApolloError(Error.INVALID_USER);
 
   if (!(await user.comparePassword(password))) {
-    throw new UserInputError("Password doesn't match");
+    throw new UserInputError(Error.INVALID_USER);
   }
 
   const { secret, expiresIn } = authConfig;

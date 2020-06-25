@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flex, Box, Divider } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
-
-import { LOGIN } from '../../../../common/apollo/mutations/authentication';
-
-import Button from '../../components/Button';
-import Form from '../../components/Form';
 import { useMutation } from '@apollo/react-hooks';
 
+import { LOGIN } from '@common/apollo/mutations/authentication';
+
+import Button from '@components/Button';
+import Form from '@components/Form';
+
 const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [login, { data, loading, error }] = useMutation(LOGIN);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -16,13 +19,15 @@ const Login: React.FC = () => {
 
     await login({
       variables: {
-        input: { email: 'vinicius@sales.com.br', password: 'vinicius' },
+        input: { email, password },
       },
     });
   };
 
   useEffect(() => {
-    console.log(data);
+    if (data?.token) {
+      alert(`login feito com sucesso ${data.token}`);
+    }
   }, [data]);
 
   return (
@@ -30,7 +35,7 @@ const Login: React.FC = () => {
       <Form
         minW={325}
         onSubmit={handleSubmit}
-        errors={error ? [error.message] : []}
+        errors={error ? [error.graphQLErrors[0].message] : []}
       >
         <Form.Input
           placeholder="email@example.com"
@@ -38,6 +43,9 @@ const Login: React.FC = () => {
           label="Email address"
           type="email"
           disabled={loading}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(event.target.value)
+          }
         />
         <Box h={8} />
         <Form.Input
@@ -46,6 +54,9 @@ const Login: React.FC = () => {
           label="Password"
           placeholder="••••••••"
           disabled={loading}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(event.target.value)
+          }
         />
         <Flex mt={8} direction="row" align="center" justify="space-between">
           <Button isLoading={loading} type="submit" children="Login" />

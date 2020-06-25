@@ -27,6 +27,7 @@ const FormInput: React.FC<FormProps> = ({
   validateValue,
   label,
   id,
+  onChange,
   ...props
 }) => {
   const [value, setValue] = useState('');
@@ -51,12 +52,14 @@ const FormInput: React.FC<FormProps> = ({
       <Input
         aria-describedby={inputHelperText?.id}
         id={id}
-        value={value}
         onBlur={handleOnBlur}
         {...props}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setError('');
           setValue(event.target.value);
+          if (onChange) {
+            onChange(event);
+          }
         }}
       />
       {inputHelperText && (
