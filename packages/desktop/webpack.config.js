@@ -1,14 +1,15 @@
-/* eslint-disable */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   entry: ['@babel/polyfill', path.resolve(__dirname, 'src', 'index.tsx')],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    chunkFilename: '[id].js',
+    chunkFilename: '[name].[hash].bundle.js',
   },
   devtool: false,
   devServer: {
@@ -28,13 +29,34 @@ module.exports = {
       }),
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: './public/index.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({ template: './public/index.html' }),
+    new LoadablePlugin({ filename: 'stats.json', writeToDisk: true }),
+    // new BundleAnalyzerPlugin(),
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          chunks: 'all',
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          enforce: true,
+        },
+      },
+    },
+  },
   module: {
     rules: [
       {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
         loader: 'graphql-tag/loader',
+      },
+      {
+        test: /\.(png|svg|jpe?g|gif)$/,
+        use: ['file-loader'],
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,

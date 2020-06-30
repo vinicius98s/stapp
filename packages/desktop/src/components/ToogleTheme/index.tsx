@@ -2,11 +2,11 @@ import React from 'react';
 import { IconButton, useColorMode } from '@chakra-ui/core';
 
 const ToggleTheme = () => {
-  const { toggleColorMode } = useColorMode();
+  const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <IconButton
-      icon="sun"
+      icon={colorMode === 'light' ? 'moon' : 'sun'}
       onClick={toggleColorMode}
       aria-label="Change theme"
     />

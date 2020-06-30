@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Flex, Box, Divider } from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 
 import { LOGIN } from '@common/apollo/mutations/authentication';
 
 import Button from '@components/Button';
 import Form from '@components/Form';
+import { AuthenticationContext } from '../../context/Authentication';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
+
+  const { setToken } = useContext(AuthenticationContext);
 
   const [login, { data, loading, error }] = useMutation(LOGIN);
 
@@ -25,8 +29,9 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    if (data?.token) {
-      alert(`login feito com sucesso ${data.token}`);
+    if (data?.token && setToken) {
+      setToken(data.token);
+      history?.push('/');
     }
   }, [data]);
 

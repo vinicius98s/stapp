@@ -9,6 +9,7 @@
     ]
   },
   "scripts": {
-    "dev:server": "yarn workspace @stapp/server dev"
+    "dev:server": "yarn workspace @stapp/server dev",
+    "dev:client": "yarn workspace @stapp/desktop start"
   }
 }

@@ -7,6 +7,8 @@ import { resolvers } from './graphserver/resolvers';
 import DataSources from './graphserver/data-sources';
 import Context from './graphserver/context';
 
+import { MONGO_URI, DB_NAME } from './config/db';
+
 const dataSources = new DataSources();
 const { context } = new Context(dataSources.users);
 
@@ -39,7 +41,7 @@ class Server {
 
   async init() {
     try {
-      await mongoose.connect('mongodb://localhost:27017/stapp', {
+      await mongoose.connect(`${MONGO_URI}${DB_NAME}`, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
       });

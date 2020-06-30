@@ -9,7 +9,7 @@ let mainWindow;
 const loadURL = serve({ directory: 'build' });
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow = new BrowserWindow({ width: 890, height: 680 });
 
   if (!process.env.ELECTRON_START_URL) {
     loadURL(mainWindow);

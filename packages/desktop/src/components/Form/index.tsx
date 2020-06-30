@@ -5,25 +5,36 @@ import FormInput from './Input';
 
 type FormProps = {
   errors?: string[];
+  successMessage?: (() => JSX.Element) | string;
 } & BoxProps;
 
 const Form: React.FC<FormProps> & { Input: typeof FormInput } = ({
   errors,
   children,
+  successMessage: SuccessMessage,
   ...props
 }) => {
   return (
     <Box as="form" {...props}>
-      {errors && errors?.length > 0
-        ? errors?.map((error, i) => (
-            <Stack spacing={3} mb={4} key={i}>
-              <Alert status="error">
+      <Stack spacing={3} mb={4}>
+        {SuccessMessage && (
+          <Alert status="success" mb={4}>
+            {typeof SuccessMessage === 'string' ? (
+              SuccessMessage
+            ) : (
+              <SuccessMessage />
+            )}
+          </Alert>
+        )}
+        {errors && errors?.length > 0
+          ? errors?.map((error, i) => (
+              <Alert mb={4} status="error" key={i}>
                 <AlertIcon />
                 {error}
               </Alert>
-            </Stack>
-          ))
-        : null}
+            ))
+          : null}
+      </Stack>
       {children}
     </Box>
   );

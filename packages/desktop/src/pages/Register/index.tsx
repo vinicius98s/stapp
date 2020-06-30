@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Box, Divider } from '@chakra-ui/core';
+import { Flex, Box, Divider, Link as ALink } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 
 import { REGISTER } from '@common/apollo/mutations/authentication';
@@ -13,13 +13,13 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const [register, { data, called, error, loading }] = useMutation(REGISTER);
 
   useEffect(() => {
     if (called && !error) {
-      console.log(data);
-      alert('register with success');
+      setSuccessMessage('Registered with success');
     }
   }, [data]);
 
@@ -53,15 +53,27 @@ const Login: React.FC = () => {
 
   return (
     <Flex
-      h="100vh"
-      mt={60}
-      mb={30}
+      minH="100vh"
+      // background="white"
+      py={30}
       alignItems="center"
       justify="center"
       direction="column"
     >
       <Form
         minW={325}
+        successMessage={
+          successMessage
+            ? () => (
+                <Flex direction="column">
+                  {successMessage}.
+                  <Link to="/login">
+                    <ALink>Go to login page</ALink>
+                  </Link>
+                </Flex>
+              )
+            : undefined
+        }
         errors={error ? [error.graphQLErrors[0].message] : []}
         onSubmit={handleSubmit}
       >
@@ -120,7 +132,7 @@ const Login: React.FC = () => {
         rounded="lg"
         textAlign="center"
       >
-        <Link to="/">Already have an account?</Link>
+        <Link to="/login">Already have an account?</Link>
       </Box>
     </Flex>
   );
