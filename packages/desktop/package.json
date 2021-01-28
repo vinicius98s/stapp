@@ -59,7 +59,7 @@
     "@types/react-router-dom": "^5.1.5",
     "babel-loader": "^8.1.0",
     "concurrently": "^5.2.0",
-    "electron": "^9.0.5",
+    "electron": "^9.4.0",
     "electron-builder": "^22.7.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
